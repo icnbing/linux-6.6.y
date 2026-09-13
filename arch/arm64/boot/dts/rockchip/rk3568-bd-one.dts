@@ -392,7 +392,7 @@
 /* ====================================================================== */
 /* PCIe 2.0 x1 — NVMe SSD */
 &pcie2x1 {
-	reset-gpios = <&gpio3 RK_PB1 GPIO_ACTIVE_HIGH>;
+	reset-gpios = <&gpio3 RK_PC1 GPIO_ACTIVE_HIGH>;
 	vpcie3v3-supply = <&vcc3v3_sys>;
 	pinctrl-names = "default";
 	pinctrl-0 = <&pcie20_reset_pin>;
@@ -405,7 +405,7 @@
 };
 
 &pcie3x2 {
-	reset-gpios = <&gpio0 RK_PB6 GPIO_ACTIVE_HIGH>;
+	reset-gpios = <&gpio0 RK_PC6 GPIO_ACTIVE_HIGH>;
 	vpcie3v3-supply = <&vcc3v3_pcie>;
 	pinctrl-names = "default";
 	pinctrl-0 = <&pcie30_reset_pin>;
