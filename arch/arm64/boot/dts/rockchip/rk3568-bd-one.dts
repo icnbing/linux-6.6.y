@@ -192,16 +192,6 @@
 		vin-supply = <&vcc3v3_sys>;
 	};
 
-	vcc_1v8: vcc-1v8 {
-		compatible = "regulator-fixed";
-		regulator-name = "vcc_1v8";
-		regulator-always-on;
-		regulator-boot-on;
-		regulator-min-microvolt = <1800000>;
-		regulator-max-microvolt = <1800000>;
-		vin-supply = <&vcc3v3_sys>;
-	};
-
 	vcca_1v8: vcca-1v8 {
 		compatible = "regulator-fixed";
 		regulator-name = "vcca_1v8";
@@ -245,35 +235,6 @@
 		vin-supply = <&vcc3v3_pi6c_03>;
 	};
 
-	/* GPU voltage: PWM4 controlled */
-	vdd_gpu: vdd-gpu {
-		compatible = "pwm-regulator";
-		pwms = <&pwm4 0 5000 1>;
-		pwm-supply = <&vcc3v3_sys>;
-		regulator-name = "vdd_gpu";
-		regulator-always-on;
-		regulator-boot-on;
-		regulator-init-microvolt = <900000>;
-		regulator-min-microvolt = <500000>;
-		regulator-max-microvolt = <1350000>;
-		regulator-ramp-delay = <6001>;
-		regulator-settling-time-up-us = <250>;
-	};
-
-	/* Logic voltage: PWM5 controlled */
-	vdd_logic: vdd-logic {
-		compatible = "pwm-regulator";
-		pwms = <&pwm5 0 5000 1>;
-		pwm-supply = <&vcc3v3_sys>;
-		regulator-name = "vdd_logic";
-		regulator-always-on;
-		regulator-boot-on;
-		regulator-init-microvolt = <900000>;
-		regulator-min-microvolt = <500000>;
-		regulator-max-microvolt = <1350000>;
-		regulator-ramp-delay = <6001>;
-		regulator-settling-time-up-us = <250>;
-	};
 };
 
 /* ====================================================================== */
