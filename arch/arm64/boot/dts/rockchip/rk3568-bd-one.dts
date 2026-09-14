@@ -2,7 +2,7 @@
 /*
  * Copyright (c) 2024 BenDian Technology
  * Device Tree Source for BenDian One (RK3568)
- *
+ * Optimized for Linux 6.6 mainline kernel compliance.
  * modify from https://github.com/zxlpop/iStoreOS-Native/blob/main/configfiles/dts/rk3568/rk3568-bendian-bd-one.dts
  * 
  */
@@ -100,26 +100,6 @@
 			};
 		};
 	};
-
-	/* ------------------------------------------------------------------ */
-	/*  HDMI sound card                                                    */
-	/* ------------------------------------------------------------------ */
-	hdmi-sound {
-		compatible = "simple-audio-card";
-		simple-audio-card,name = "HDMI";
-		simple-audio-card,format = "i2s";
-		simple-audio-card,mclk-fs = <256>;
-		status = "okay";
-
-		simple-audio-card,codec {
-			sound-dai = <&hdmi>;
-		};
-
-		simple-audio-card,cpu {
-			sound-dai = <&i2s0_8ch>;
-		};
-	};
-
 	/* ------------------------------------------------------------------ */
 	/*  ADC recovery button                                                */
 	/* ------------------------------------------------------------------ */
@@ -280,7 +260,7 @@
 };
 
 /* ====================================================================== */
-/*  SATA                                                                  */
+/*  SATA      --enable SATA1                                              */
 /* ====================================================================== */
 &sata0 {
 	status = "okay";
@@ -290,7 +270,7 @@
 	status = "okay";
 };
 /* ====================================================================== */
-/*  eMMC -OK                                                              */
+/*  eMMC -OK  use hs200 mode                                              */
 /* ====================================================================== */
 &sdhci {
 	bus-width = <8>;
@@ -324,7 +304,7 @@
 
 &usb_host0_xhci {
 	dr_mode = "host";
-	phys = <&usb2phy0_otg>, <&combphy0 PHY_TYPE_USB3>;
+	phys = <&usb2phy0_otg>, <&combphy0 PHY_TYPE_USB3>;  //核对原厂实际使用phy@fe820000
 	phy-names = "usb2-phy", "usb3-phy";
 	phys-supply = <&vcc_3v3>; 
 	status = "okay";
@@ -503,14 +483,14 @@
 				reg = <0>;
 				/* 6.6 中 color/function 可选，但建议保留以兼容 6.12 */
 				color = <LED_COLOR_ID_GREEN>;
-				//function = LED_FUNCTION_ACTIVITY;
+				function = LED_FUNCTION_ACTIVITY;
 				linux,default-trigger = "netdev";
 			};
 
 			led@1 {
 				reg = <1>;
 				color = <LED_COLOR_ID_YELLOW>;
-				//function = LED_FUNCTION_LINK;
+				function = LED_FUNCTION_LINK;
 				linux,default-trigger = "netdev";
 			};
 		};
@@ -518,7 +498,7 @@
 };
 
 /* ====================================================================== */
-/*  I2C0 — CPU voltage regulator (TCS4525)                               */
+/*  I2C0 — CPU voltage regulator (TCS4525)   use ophub rk809              */
 /* ====================================================================== */
 &i2c0 {
 	status = "okay";
@@ -540,6 +520,7 @@
 			regulator-off-in-suspend;
 		};
 	};
+	
 	rk809: pmic@20 {
 		compatible = "rockchip,rk809";
 		reg = <0x20>;
@@ -761,7 +742,7 @@
 };
 
 /* ====================================================================== */
-/*  IO Domains (PMU GRF)                                                  */
+/*  IO Domains (PMU GRF)   use ophub kernel6.18 version                   */
 /* ====================================================================== */
 &pmu_io_domains {
 	pmuio1-supply = <&vcc3v3_pmu>;
@@ -784,7 +765,7 @@
 };
 
 /* ====================================================================== */
-/*  Pinctrl additions                                                     */
+/*  Pinctrl additions   modify "pinctrl bindings" and add ophub pmic      */
 /* ====================================================================== */
 &pinctrl {
 
