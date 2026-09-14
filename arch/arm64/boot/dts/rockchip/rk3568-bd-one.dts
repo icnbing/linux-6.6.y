@@ -326,16 +326,15 @@
 };
 
 /* ====================================================================== */
-/*  eMMC                                                                  */
+/*  eMMC -OK                                                              */
 /* ====================================================================== */
 &sdhci {
 	bus-width = <8>;
 	max-frequency = <200000000>;
 	non-removable;
-	//mmc-hs400-1_8v;
-	//mmc-hs400-enhanced-strobe;
-	//vmmc-supply = <&vcc_3v3>;
-	//vqmmc-supply = <&vcc_1v8>;
+	supports-emmc;
+	mmc-hs200-1_8v;
+	vmmc-supply = <&vcc_3v3>;
 	pinctrl-names = "default";
 	pinctrl-0 = <&emmc_bus8 &emmc_clk &emmc_cmd>;
 	status = "okay";
@@ -363,8 +362,8 @@
 	dr_mode = "host";
 	phys = <&usb2phy0_otg>, <&combphy1 PHY_TYPE_USB3>;
 	phy-names = "usb2-phy", "usb3-phy";
-	//phys-supply = <&vcc_3v3>; 
-	status = "disabled";
+	phys-supply = <&vcc_3v3>; 
+	status = "okay";
 };
 
 /* USB 2.0 Host (EHCI/OHCI) */
@@ -403,7 +402,8 @@
 
 /* PCIe 3.0 x2 — (available, e.g. dual NVMe or other) */
 &pcie30phy {
-	//status = "okay";
+	data-lanes = <1 2>;
+	status = "okay";
 };
 
 &pcie3x2 {
@@ -519,8 +519,8 @@
 	snps,reset-gpio = <&gpio1 RK_PA6 GPIO_ACTIVE_LOW>;
 	snps,reset-active-low;
 	snps,reset-delays-us = <0 20000 100000>;
-	tx_delay = <0x4f>;
-	rx_delay = <0x26>;
+	tx_delay = <0x42>;
+	rx_delay = <0x28>;
 	status = "okay";
 };
 
