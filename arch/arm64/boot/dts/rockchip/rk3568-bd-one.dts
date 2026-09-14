@@ -485,6 +485,10 @@
 				color = <LED_COLOR_ID_GREEN>;
 				//function = LED_FUNCTION_ACTIVITY;
 				linux,default-trigger = "netdev";
+				 /* 必须显式指定接口名，否则 device_name 为空 */
+				linux,netdev-name = "eth1";
+				/* 必须显式指定模式，因为运行时无法修改 */
+				linux,netdev-mode = "link tx rx";
 			};
 
 			led@1 {
@@ -492,6 +496,8 @@
 				color = <LED_COLOR_ID_YELLOW>;
 				//function = LED_FUNCTION_LINK;
 				linux,default-trigger = "netdev";
+				linux,netdev-name = "eth1";
+        		linux,netdev-mode = "link";
 			};
 		};
 	};
