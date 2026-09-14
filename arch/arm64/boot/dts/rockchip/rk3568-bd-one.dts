@@ -360,7 +360,7 @@
 
 &usb_host0_xhci {
 	dr_mode = "host";
-	phys = <&usb2phy0_otg>, <&combphy1 PHY_TYPE_USB3>;
+	phys = <&usb2phy0_otg>, <&combphy0 PHY_TYPE_USB3>;
 	phy-names = "usb2-phy", "usb3-phy";
 	phys-supply = <&vcc_3v3>; 
 	status = "okay";
@@ -519,8 +519,8 @@
 	snps,reset-gpio = <&gpio1 RK_PA6 GPIO_ACTIVE_LOW>;
 	snps,reset-active-low;
 	snps,reset-delays-us = <0 20000 100000>;
-	tx_delay = <0x42>;
-	rx_delay = <0x28>;
+	tx_delay = <0x4f>;
+	rx_delay = <0x26>;
 	status = "okay";
 };
 
