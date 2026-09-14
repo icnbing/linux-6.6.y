@@ -403,7 +403,7 @@
 
 /* PCIe 3.0 x2 — (available, e.g. dual NVMe or other) */
 &pcie30phy {
-	status = "okay";
+	//status = "okay";
 };
 
 &pcie3x2 {
