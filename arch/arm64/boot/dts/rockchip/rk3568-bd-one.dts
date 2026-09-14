@@ -332,10 +332,10 @@
 	bus-width = <8>;
 	max-frequency = <200000000>;
 	non-removable;
-	mmc-hs400-1_8v;
-	mmc-hs400-enhanced-strobe;
-	vmmc-supply = <&vcc_3v3>;
-	vqmmc-supply = <&vcc_1v8>;
+	//mmc-hs400-1_8v;
+	//mmc-hs400-enhanced-strobe;
+	//vmmc-supply = <&vcc_3v3>;
+	//vqmmc-supply = <&vcc_1v8>;
 	pinctrl-names = "default";
 	pinctrl-0 = <&emmc_bus8 &emmc_clk &emmc_cmd>;
 	status = "okay";
