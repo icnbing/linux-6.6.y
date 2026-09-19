@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: GPL-2.0
-dtbo-$(CONFIG_ARCH_ROCKCHIP) += \
+#dtbo-$(CONFIG_ARCH_ROCKCHIP) += \
 	rk3568-opp-2.2ghz.dtbo \
 	rk3568-h6xk-disable-pcie2x1.dtbo \
 	rk3568-h69k-disable-sata.dtbo \
