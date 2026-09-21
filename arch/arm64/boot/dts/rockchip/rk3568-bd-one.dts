@@ -10,8 +10,6 @@
  *
  * Known issues (carried over from k6.6, to be debugged on 6.18):
  * 1、WAN 指示灯不工作；
- +++ b/drivers/net/phy/realtek/realtek_main.c
- +static void rtl821x_led_of_init(struct phy_device *phydev)
  * 2、HDMI不工作；
  * 其他基本OK, 
  */
