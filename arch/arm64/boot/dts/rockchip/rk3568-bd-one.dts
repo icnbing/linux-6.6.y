@@ -3,12 +3,17 @@
  * Copyright (c) 2024 BenDian Technology
  * Device Tree Source for BenDian One (RK3568)
  * Optimized for Linux 6.6 kernel compliance.
- * arch/arm64/boot/dts/rockchip/Makefile 
- * dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3568-bd-one.dtb
+ * rk3568-bd-one.k6.6V1.1-2026.09.21-cnb@srv.wang
+ *
+ * arch/arm64/boot/dts/rockchip/Makefile
+ *   dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3568-bd-one.dtb
+ *
+ * Known issues (carried over from k6.6, to be debugged on 6.18):
  * 1、WAN 指示灯不工作；
+ +++ b/drivers/net/phy/realtek/realtek_main.c
+ +static void rtl821x_led_of_init(struct phy_device *phydev)
  * 2、HDMI不工作；
  * 其他基本OK, 
- * --cnb@srv.wang ----------2026.09.19 
  */
 
 /dts-v1/;
@@ -375,54 +380,58 @@
 /* ====================================================================== */
 /* USB 3.0 OTG (Type-C / Type-A)，原厂是启用的，开启后报：
 *  rockchip-naneng-combphy fe820000.phy: phy type select 4 overwriting type 1
+config
+CONFIG_USB_DWC3=y
+CONFIG_USB_DWC3_HOST=y
+CONFIG_USB_DWC3_OF_SIMPLE=y
 */
-// &usb2phy0 {
-// 	status = "okay";
-// };
+&usb2phy0 {
+	status = "okay";
+};
 
-// &usb2phy0_host {
-// 	status = "okay";
-// 	phy-supply = <&vcc5v0_usb>;
-// };
+&usb2phy0_host {
+	status = "okay";
+	phy-supply = <&vcc5v0_usb>;
+};
 
-// &usb2phy0_otg {
-// 	status = "okay";
-// 	phy-supply = <&vcc5v0_usb>;
-// };
+&usb2phy0_otg {
+	status = "okay";
+	phy-supply = <&vcc5v0_usb>;
+};
 
-// &usb_host0_xhci {
-// 	status = "okay";
-// 	 /*核对原厂实际使用phy@fe820000  combphy0*/
-// 	phys = <&usb2phy0_otg>, <&combphy0 PHY_TYPE_USB3>; 
-// 	phy-names = "usb2-phy", "usb3-phy";
-// 	extcon = <&usb2phy0>;
-// 	//phys-supply = <&vcc_3v3>; 
+&usb_host0_xhci {
+	status = "okay";
+	 /*核对原厂实际使用phy@fe820000  combphy0*/
+	phys = <&usb2phy0_otg>, <&combphy0 PHY_TYPE_USB3>; 
+	phy-names = "usb2-phy", "usb3-phy";
+	extcon = <&usb2phy0>;
+	//phys-supply = <&vcc_3v3>; 
 
-// };
+};
 
 /* USB 2.0 Host (EHCI/OHCI) */
-&usb2phy1 {
-	status = "okay";
-};
+// &usb2phy1 {
+// 	status = "okay";
+// };
 
-&usb2phy1_host {
-	phy-supply = <&vcc5v0_usb>;
-	status = "okay";
-};
+// &usb2phy1_host {
+// 	phy-supply = <&vcc5v0_usb>;
+// 	status = "okay";
+// };
 
-&usb2phy1_otg {
-	status = "okay";
-};
-/* 原厂禁用前3项，禁用后报：
-* platform fd800000.usb: deferred probe pending
- */
-&usb_host0_ehci {
-	status = "okay";
-};
+// &usb2phy1_otg {
+// 	status = "okay";
+// };
+// /* 原厂禁用前3项，禁用后报：
+// * platform fd800000.usb: deferred probe pending
+//  */
+// &usb_host0_ehci {
+// 	status = "okay";
+// };
 
-&usb_host0_ohci {
-	status = "okay";
-};
+// &usb_host0_ohci {
+// 	status = "okay";
+// };
 
 /* ====================================================================== */
 /*  Ethernet                                                              */
@@ -583,7 +592,6 @@
 &hdmi {
 	avdd-0v9-supply = <&vdda_0v9>;
 	avdd-1v8-supply = <&vcca_1v8>;
-	#sound-dai-cells = <0>;		/* HDMI 音频必需 */
 	ddc-i2c-bus = <&i2c3>;		/* 与 hdmi-con 保持一致 */
 	status = "okay";
 
@@ -646,7 +654,6 @@
 /*  Audio (I2S0 → HDMI)                                                  */
 /* ====================================================================== */
 &i2s0_8ch {
-	#sound-dai-cells = <0>;
 	status = "okay";
 };
 
