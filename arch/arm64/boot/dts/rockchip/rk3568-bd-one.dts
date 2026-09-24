@@ -3,15 +3,12 @@
  * Copyright (c) 2024 BenDian Technology
  * Device Tree Source for BenDian One (RK3568)
  * Optimized for Linux 6.6 kernel compliance.
- * rk3568-bd-one.k6.6V1.1-2026.09.21-cnb@srv.wang
- *
- * arch/arm64/boot/dts/rockchip/Makefile
- *   dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3568-bd-one.dtb
- *
- * Known issues (carried over from k6.6, to be debugged on 6.18):
+ * arch/arm64/boot/dts/rockchip/Makefile 
+ * dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3568-bd-one.dtb
  * 1、WAN 指示灯不工作；
  * 2、HDMI不工作；
  * 其他基本OK, 
+ * --cnb@srv.wang ----------2026.09.19 
  */
 
 /dts-v1/;
@@ -327,9 +324,9 @@
 };
 
 /* combphy2 → PCIe 2.0 (未使用) */
-&combphy2 {
-	status = "okay";
-};
+// &combphy2 {
+// 	status = "okay";
+// };
 
 /* ====================================================================== */
 /*  PCIe                                                                  */
@@ -357,7 +354,7 @@
 	pinctrl-0 = <&pcie30_reset_pin>;
 	reset-gpios = <&gpio0 RK_PC6 GPIO_ACTIVE_HIGH>;
 	reset-assert-us = <10000>;    /* reset 保持 10ms */
-    	reset-deassert-us = <10000>;  /* reset 释放后等待 10ms */
+    reset-deassert-us = <10000>;  /* reset 释放后等待 10ms */
 	vpcie3v3-supply = <&vcc3v3_pcie>;
 	
 };
@@ -378,10 +375,6 @@
 /* ====================================================================== */
 /* USB 3.0 OTG (Type-C / Type-A)，原厂是启用的，开启后报：
 *  rockchip-naneng-combphy fe820000.phy: phy type select 4 overwriting type 1
-config
-CONFIG_USB_DWC3=y
-CONFIG_USB_DWC3_HOST=y
-CONFIG_USB_DWC3_OF_SIMPLE=y
 */
 &usb2phy0 {
 	status = "okay";
@@ -590,6 +583,7 @@ CONFIG_USB_DWC3_OF_SIMPLE=y
 &hdmi {
 	avdd-0v9-supply = <&vdda_0v9>;
 	avdd-1v8-supply = <&vcca_1v8>;
+	#sound-dai-cells = <0>;		/* HDMI 音频必需 */
 	ddc-i2c-bus = <&i2c3>;		/* 与 hdmi-con 保持一致 */
 	status = "okay";
 
@@ -652,6 +646,7 @@ CONFIG_USB_DWC3_OF_SIMPLE=y
 /*  Audio (I2S0 → HDMI)                                                  */
 /* ====================================================================== */
 &i2s0_8ch {
+	#sound-dai-cells = <0>;
 	status = "okay";
 };
 
